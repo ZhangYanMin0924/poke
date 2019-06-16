@@ -51,18 +51,27 @@ $(function () {
 
     let box=$('.box');
     let first=null;
+    let flag1=true;
     box.on('click','.poke',function () {
         let _this=$(this);
         let [i,j]=_this.attr('id').split('_');
         let id1=i*1+1+'_'+j, id2=i*1+1+'_'+(j*1+1);
+        if (!flag1){
+            return ;
+        }
+        flag1=false;
         if ($('#'+id1).length||$('#'+id2).length) {
             return;
         }
         if (_this.hasClass('active')) {
-            $(this).removeClass('active').animate({top:'+=30px'})
+            $(this).removeClass('active').animate({top:'+=30px'},function () {
+                flag1=true;
+            })
 
         }else{
-            $(this).addClass('active').animate({top:'-=30px'})
+            $(this).addClass('active').animate({top:'-=30px'},function () {
+                flag1=true;
+            })
         }
         //判断
         if (!first) {
